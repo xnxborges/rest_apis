@@ -9,11 +9,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.concurrent.atomic.AtomicLong;
 
+import static br.com.rest_apis.converter.NumberConverter.convertToDouble;
+import static br.com.rest_apis.converter.NumberConverter.isNumeric;
+
 @RestController
 public class MathController {
 
     private final AtomicLong counter = new AtomicLong();
 
+    //Soma
     @RequestMapping(value = "/sum/{numberOne}/{numberTwo}", method = RequestMethod.GET)
     public Double sum(
             @PathVariable(value = "numberOne") String numberOne,
@@ -25,6 +29,7 @@ public class MathController {
         return convertToDouble(numberOne) + convertToDouble(numberTwo);
     }
 
+    //Subtracao
     @RequestMapping(value = "/sub/{numberOne}/{numberTwo}", method = RequestMethod.GET)
     public Double sub(
             @PathVariable(value = "numberOne") String numberOne,
@@ -36,6 +41,7 @@ public class MathController {
         return convertToDouble(numberOne) - convertToDouble(numberTwo);
     }
 
+    //Multiplicacao
     @RequestMapping(value = "/mult/{numberOne}/{numberTwo}", method = RequestMethod.GET)
     public Double mult(
             @PathVariable(value = "numberOne") String numberOne,
@@ -47,6 +53,7 @@ public class MathController {
         return convertToDouble(numberOne) * convertToDouble(numberTwo);
     }
 
+    //Divisao
     @RequestMapping(value = "/div/{numberOne}/{numberTwo}", method = RequestMethod.GET)
     public Double div(
             @PathVariable(value = "numberOne") String numberOne,
@@ -56,19 +63,6 @@ public class MathController {
             throw new UnsupportedMathOperationsException("Please set a numeric value");
         }
         return convertToDouble(numberOne) / convertToDouble(numberTwo);
-    }
-
-    private double convertToDouble(String strNumber) {
-        if (strNumber == null) return 0D;
-        String number = strNumber.replaceAll(",", ".");
-        if (isNumeric(number)) return Double.parseDouble(number);
-        return 0D;
-    }
-
-    private boolean isNumeric(String strNumber) {
-        if (strNumber == null) return false;
-        String number = strNumber.replaceAll(",", ".");
-        return number.matches("[-+]?[0-9]*\\.?[0-9]+");
     }
 
 }
