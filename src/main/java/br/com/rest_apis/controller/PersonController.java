@@ -15,7 +15,7 @@ public class PersonController {
     @Autowired
     private PersonService personService;
 
-    @RequestMapping(value = "?{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public Person findById(@PathVariable(value = "id") Long id) throws Exception{
         return personService.findById(id);
     }
@@ -39,7 +39,7 @@ public class PersonController {
         return personService.update(person);
     }
 
-    @RequestMapping(value = "?{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void delete(@PathVariable(value = "id") Long id) {
         personService.delete(Long.valueOf(id));
     }
