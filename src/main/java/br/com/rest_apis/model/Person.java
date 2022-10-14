@@ -1,16 +1,29 @@
 package br.com.rest_apis.model;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Entity
+@Table(name = "person")
 public class Person implements Serializable {
 
     private static final long serialVersion = 1L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name ="first_name", nullable = false, length = 80)
     private String firstName;
-    private String LastName;
+
+    @Column(name = "last_name", length = 80)
+    private String lastName;
+
+    @Column
     private String address;
+
+    @Column
     private String gender;
 
     public Person() {
@@ -20,7 +33,7 @@ public class Person implements Serializable {
     public Person(Long id, String firstName, String lastName, String address, String gender) {
         this.id = id;
         this.firstName = firstName;
-        LastName = lastName;
+        this.lastName = lastName;
         this.address = address;
         this.gender = gender;
     }
@@ -42,11 +55,11 @@ public class Person implements Serializable {
     }
 
     public String getLastName() {
-        return LastName;
+        return lastName;
     }
 
     public void setLastName(String lastName) {
-        LastName = lastName;
+        this.lastName = lastName;
     }
 
     public String getAddress() {
