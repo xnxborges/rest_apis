@@ -59,7 +59,7 @@ public class PersonService {
     }
 
     public void delete(String id){
-        logger.info("Deleting one persons");
+        logger.info("Deleting one person");
 
     }
 }
