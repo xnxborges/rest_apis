@@ -21,7 +21,7 @@ public class PersonService {
         person.setId(counter.incrementAndGet());
         person.setFirstName("Natan");
         person.setLastName("Borges");
-        person.setAddress("Cotia - São PAulo");
+        person.setAddress("Cotia - São Paulo");
         person.setGender("Male");
 
         return person;
@@ -46,5 +46,20 @@ public class PersonService {
         person.setAddress("Person address: " + i);
         person.setGender("Male");
         return person;
+    }
+
+    public Person create(Person person){
+        logger.info("Creating one persons");
+        return person;
+    }
+
+    public Person update(Person person){
+        logger.info("Updating one persons");
+        return person;
+    }
+
+    public void delete(String id){
+        logger.info("Deleting one persons");
+
     }
 }
