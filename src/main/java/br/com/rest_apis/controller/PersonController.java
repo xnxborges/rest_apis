@@ -1,6 +1,8 @@
 package br.com.rest_apis.controller;
 
 import br.com.rest_apis.dto.v1.PersonDto;
+import br.com.rest_apis.service.PersonService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +12,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/person")
 public class PersonController {
+
+    @Autowired
+    PersonService personService;
 
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

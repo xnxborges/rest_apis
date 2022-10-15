@@ -1,6 +1,8 @@
 package br.com.rest_apis.service;
 
+import br.com.rest_apis.dto.v1.PersonDto;
 import br.com.rest_apis.exceptions.ResourceNotFoundException;
+import br.com.rest_apis.mapper.DozerMapper;
 import br.com.rest_apis.model.Person;
 import br.com.rest_apis.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,25 +19,33 @@ public class PersonService {
     @Autowired
     PersonRepository personRepository;
 
-    public Person findById(Long id){
+    public PersonDto findById(Long id){
         logger.info("Finding one person");
 
-        return personRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No records found for this id"));
+        Person entity = personRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("No records found for this id"));
+
+        return DozerMapper.parseObject(entity, PersonDto.class);
     }
 
-    public List<Person> findAll(){
+    public List<PersonDto> findAll(){
         logger.info("Finding all persons");
 
-        return personRepository.findAll();
+        return DozerMapper.parseListObjects(personRepository.findAll(), PersonDto.class);
     }
 
 
-    public Person create(Person person){
+    public PersonDto create(PersonDto person){
         logger.info("Creating one persons");
-        return personRepository.save(person);
+
+        Person entity = DozerMapper.parseObject(person, Person.class);
+
+        PersonDto dto = DozerMapper.parseObject(personRepository.save(entity), PersonDto.class);
+
+        return dto;
     }
 
-    public Person update(Person person){
+    public PersonDto update(PersonDto person){
         logger.info("Updating one persons");
         Person entity = personRepository.findById(person.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this id"));
@@ -45,7 +55,9 @@ public class PersonService {
         entity.setAddress(person.getAddress());
         entity.setGender(person.getGender());
 
-        return personRepository.save(person);
+        PersonDto dto = DozerMapper.parseObject(personRepository.save(entity), PersonDto.class);
+
+        return dto;
     }
 
     public void delete(Long id){
