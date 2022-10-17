@@ -1,6 +1,7 @@
 package br.com.rest_apis.controller;
 
 import br.com.rest_apis.dto.v1.PersonDto;
+import br.com.rest_apis.dto.v2.PersonDtoV2;
 import br.com.rest_apis.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -31,6 +32,12 @@ public class PersonController {
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public PersonDto create(@RequestBody PersonDto person) {
         return personService.create(person);
+    }
+
+    @PostMapping(value = "/v2", produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public PersonDtoV2 createV2(@RequestBody PersonDtoV2 person) {
+        return personService.createV2(person);
     }
 
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE,

@@ -1,8 +1,10 @@
 package br.com.rest_apis.service;
 
 import br.com.rest_apis.dto.v1.PersonDto;
+import br.com.rest_apis.dto.v2.PersonDtoV2;
 import br.com.rest_apis.exceptions.ResourceNotFoundException;
 import br.com.rest_apis.mapper.DozerMapper;
+import br.com.rest_apis.mapper.custom.PersonMapper;
 import br.com.rest_apis.model.Person;
 import br.com.rest_apis.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,9 @@ public class PersonService {
 
     @Autowired
     PersonRepository personRepository;
+
+    @Autowired
+    PersonMapper mapper;
 
     public PersonDto findById(Long id){
         logger.info("Finding one person");
@@ -43,6 +48,16 @@ public class PersonService {
         PersonDto dto = DozerMapper.parseObject(personRepository.save(entity), PersonDto.class);
 
         return dto;
+    }
+
+    public PersonDtoV2 createV2(PersonDtoV2 person){
+        logger.info("Creating one persons");
+
+        Person entity = mapper.convertDtoToEntity(person);
+
+        PersonDtoV2 dtoV2 = mapper.convertEntityToDto(personRepository.save(entity));
+
+        return dtoV2;
     }
 
     public PersonDto update(PersonDto person){
