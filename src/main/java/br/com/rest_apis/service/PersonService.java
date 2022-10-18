@@ -35,14 +35,16 @@ public class PersonService {
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this id"));
 
         PersonDto dto =  DozerMapper.parseObject(entity, PersonDto.class);
-        dto.add(linkTo(methodOn(PersonController.class).findById(id)).withSelfRel());
+        dto.add(linkTo(methodOn(PersonController.class).findById(dto.getKey())).withSelfRel());
         return dto;
     }
 
     public List<PersonDto> findAll(){
         logger.info("Finding all persons");
 
-        return DozerMapper.parseListObjects(personRepository.findAll(), PersonDto.class);
+        List<PersonDto> dto = DozerMapper.parseListObjects(personRepository.findAll(), PersonDto.class);
+        dto.forEach(p -> p.add(linkTo(methodOn(PersonController.class).findById(p.getKey())).withSelfRel()));
+        return dto;
     }
 
 
@@ -52,7 +54,7 @@ public class PersonService {
         Person entity = DozerMapper.parseObject(person, Person.class);
 
         PersonDto dto = DozerMapper.parseObject(personRepository.save(entity), PersonDto.class);
-
+        dto.add(linkTo(methodOn(PersonController.class).create(person)).withSelfRel());
         return dto;
     }
 
@@ -77,6 +79,7 @@ public class PersonService {
         entity.setGender(person.getGender());
 
         PersonDto dto = DozerMapper.parseObject(personRepository.save(entity), PersonDto.class);
+        dto.add(linkTo(methodOn(PersonController.class).findById(dto.getKey())).withSelfRel());
 
         return dto;
     }
