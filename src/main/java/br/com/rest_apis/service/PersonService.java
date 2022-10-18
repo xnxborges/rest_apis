@@ -1,5 +1,6 @@
 package br.com.rest_apis.service;
 
+import br.com.rest_apis.controller.PersonController;
 import br.com.rest_apis.dto.v1.PersonDto;
 import br.com.rest_apis.dto.v2.PersonDtoV2;
 import br.com.rest_apis.exceptions.ResourceNotFoundException;
@@ -12,6 +13,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.logging.Logger;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Service
 public class PersonService {
@@ -30,7 +34,9 @@ public class PersonService {
         Person entity = personRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this id"));
 
-        return DozerMapper.parseObject(entity, PersonDto.class);
+        PersonDto dto =  DozerMapper.parseObject(entity, PersonDto.class);
+        dto.add(linkTo(methodOn(PersonController.class).findById(id)).withSelfRel());
+        return dto;
     }
 
     public List<PersonDto> findAll(){
@@ -62,7 +68,7 @@ public class PersonService {
 
     public PersonDto update(PersonDto person){
         logger.info("Updating one persons");
-        Person entity = personRepository.findById(person.getId())
+        Person entity = personRepository.findById(person.getKey())
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this id"));
 
         entity.setFirstName(person.getFirstName());
