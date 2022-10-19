@@ -13,9 +13,6 @@ import java.util.Objects;
 public class PersonDto extends RepresentationModel<PersonDto> implements Serializable {
 
 
-    private static final long serialVersion = 1L;
-
-
     @JsonProperty("id")
     @Mapping("id")
     private Long key;

@@ -1,7 +1,6 @@
 package br.com.rest_apis.controller;
 
 import br.com.rest_apis.dto.v1.PersonDto;
-import br.com.rest_apis.dto.v2.PersonDtoV2;
 import br.com.rest_apis.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -15,40 +14,39 @@ import java.util.List;
 public class PersonController {
 
     @Autowired
-    PersonService personService;
-
+    PersonService service;
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public PersonDto findById(@PathVariable(value = "id") Long id) {
-        return personService.findById(id);
+        return service.findById(id);
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<PersonDto> findAll() {
-        return personService.findAll();
+        return service.findAll();
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public PersonDto create(@RequestBody PersonDto person) {
-        return personService.create(person);
+        return service.create(person);
     }
 
-    @PostMapping(value = "/v2", produces = MediaType.APPLICATION_JSON_VALUE,
+    /*@PostMapping(value = "/v2", produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public PersonDtoV2 createV2(@RequestBody PersonDtoV2 person) {
-        return personService.createV2(person);
-    }
+        return service.createV2(person);
+    }*/
 
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public PersonDto update(@RequestBody PersonDto person) {
-        return personService.update(person);
+        return service.update(person);
     }
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<?> delete(@PathVariable(value = "id") Long id) {
-        personService.delete(id);
+        service.delete(id);
         return ResponseEntity.noContent().build();
     }
 

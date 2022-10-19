@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class PersonDtoV2 implements Serializable {
 
-    private static final long serialVersion = 1L;
+
     private Long id;
     private String firstName;
     private String lastName;
@@ -80,7 +80,9 @@ public class PersonDtoV2 implements Serializable {
         if (this == o) return true;
         if (!(o instanceof PersonDtoV2)) return false;
         PersonDtoV2 that = (PersonDtoV2) o;
-        return getId().equals(that.getId()) && getFirstName().equals(that.getFirstName()) && getLastName().equals(that.getLastName()) && getBirthDay().equals(that.getBirthDay()) && getAddress().equals(that.getAddress()) && getGender().equals(that.getGender());
+        return getId().equals(that.getId()) && getFirstName().equals(that.getFirstName())
+                && getLastName().equals(that.getLastName()) && getBirthDay().equals(that.getBirthDay())
+                && getAddress().equals(that.getAddress()) && getGender().equals(that.getGender());
     }
 
     @Override

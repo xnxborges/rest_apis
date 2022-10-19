@@ -9,7 +9,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class DozerConverterTest {
+class DozerConverterTest {
 
     MockPerson inputObject;
 
@@ -19,7 +19,7 @@ public class DozerConverterTest {
     }
 
     @Test
-    public void parseEntityToDtoTest() {
+    void parseEntityToDtoTest() {
         PersonDto output =  DozerMapper.parseObject(inputObject.mockEntity(), PersonDto.class);
         assertEquals(Long.valueOf(0L), output.getKey());
         assertEquals("First Name Test0", output.getFirstName());
@@ -29,7 +29,7 @@ public class DozerConverterTest {
     }
 
     @Test
-    public void parseEntityListToDtoListTest() {
+    void parseEntityListToDtoListTest() {
         List<PersonDto> outputList = DozerMapper.parseListObjects(inputObject.mockEntityList(), PersonDto.class);
         PersonDto outputZero = outputList.get(0);
 
@@ -57,7 +57,7 @@ public class DozerConverterTest {
     }
 
     @Test
-    public void parseDtoToEntityTest() {
+    void parseDtoToEntityTest() {
         Person output = DozerMapper.parseObject(inputObject.mockDto(), Person.class);
         assertEquals(Long.valueOf(0L), output.getId());
         assertEquals("First Name Test0", output.getFirstName());
@@ -67,7 +67,7 @@ public class DozerConverterTest {
     }
 
     @Test
-    public void parserDtoListToEntityListTest() {
+    void parserDtoListToEntityListTest() {
         List<Person> outputList = DozerMapper.parseListObjects(inputObject.mockDtoList(), Person.class);
         Person outputZero = outputList.get(0);
 
