@@ -23,7 +23,7 @@ public class PersonService {
     private Logger logger = Logger.getLogger(PersonService.class.getName());
 
     @Autowired
-    PersonRepository personRepository;
+    PersonRepository repository;
 
     @Autowired
     PersonMapper mapper;
@@ -31,7 +31,7 @@ public class PersonService {
     public PersonDto findById(Long id){
         logger.info("Finding one person");
 
-        Person entity = personRepository.findById(id)
+        Person entity = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this id"));
 
         PersonDto dto =  DozerMapper.parseObject(entity, PersonDto.class);
@@ -42,7 +42,7 @@ public class PersonService {
     public List<PersonDto> findAll(){
         logger.info("Finding all persons");
 
-        List<PersonDto> dto = DozerMapper.parseListObjects(personRepository.findAll(), PersonDto.class);
+        List<PersonDto> dto = DozerMapper.parseListObjects(repository.findAll(), PersonDto.class);
         dto.forEach(p -> p.add(linkTo(methodOn(PersonController.class).findById(p.getKey())).withSelfRel()));
         return dto;
     }
@@ -53,7 +53,7 @@ public class PersonService {
 
         Person entity = DozerMapper.parseObject(person, Person.class);
 
-        PersonDto dto = DozerMapper.parseObject(personRepository.save(entity), PersonDto.class);
+        PersonDto dto = DozerMapper.parseObject(repository.save(entity), PersonDto.class);
         dto.add(linkTo(methodOn(PersonController.class).create(person)).withSelfRel());
         return dto;
     }
@@ -63,14 +63,14 @@ public class PersonService {
 
         Person entity = mapper.convertDtoToEntity(person);
 
-        PersonDtoV2 dtoV2 = mapper.convertEntityToDto(personRepository.save(entity));
+        PersonDtoV2 dtoV2 = mapper.convertEntityToDto(repository.save(entity));
 
         return dtoV2;
     }
 
     public PersonDto update(PersonDto person){
         logger.info("Updating one persons");
-        Person entity = personRepository.findById(person.getKey())
+        Person entity = repository.findById(person.getKey())
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this id"));
 
         entity.setFirstName(person.getFirstName());
@@ -78,7 +78,7 @@ public class PersonService {
         entity.setAddress(person.getAddress());
         entity.setGender(person.getGender());
 
-        PersonDto dto = DozerMapper.parseObject(personRepository.save(entity), PersonDto.class);
+        PersonDto dto = DozerMapper.parseObject(repository.save(entity), PersonDto.class);
         dto.add(linkTo(methodOn(PersonController.class).findById(dto.getKey())).withSelfRel());
 
         return dto;
@@ -87,10 +87,10 @@ public class PersonService {
     public void delete(Long id){
         logger.info("Deleting one person");
 
-        Person entity = personRepository.findById(id)
+        Person entity = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this id"));
 
-        personRepository.delete(entity);
+        repository.delete(entity);
 
     }
 }

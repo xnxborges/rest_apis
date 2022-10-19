@@ -1,7 +1,6 @@
-package br.com.rest_apis.unitTests.mapper;
+package br.com.rest_apis.mapper;
 
 import br.com.rest_apis.dto.v1.PersonDto;
-import br.com.rest_apis.mapper.DozerMapper;
 import br.com.rest_apis.model.Person;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,7 +21,7 @@ public class DozerConverterTest {
     @Test
     public void parseEntityToDtoTest() {
         PersonDto output =  DozerMapper.parseObject(inputObject.mockEntity(), PersonDto.class);
-        assertEquals(Long.valueOf(0L), output.getId());
+        assertEquals(Long.valueOf(0L), output.getKey());
         assertEquals("First Name Test0", output.getFirstName());
         assertEquals("Last Name Test0", output.getLastName());
         assertEquals("Address Test0", output.getAddress());
@@ -34,7 +33,7 @@ public class DozerConverterTest {
         List<PersonDto> outputList = DozerMapper.parseListObjects(inputObject.mockEntityList(), PersonDto.class);
         PersonDto outputZero = outputList.get(0);
 
-        assertEquals(Long.valueOf(0L), outputZero.getId());
+        assertEquals(Long.valueOf(0L), outputZero.getKey());
         assertEquals("First Name Test0", outputZero.getFirstName());
         assertEquals("Last Name Test0", outputZero.getLastName());
         assertEquals("Address Test0", outputZero.getAddress());
@@ -42,7 +41,7 @@ public class DozerConverterTest {
 
         PersonDto outputSeven = outputList.get(7);
 
-        assertEquals(Long.valueOf(7L), outputSeven.getId());
+        assertEquals(Long.valueOf(7L), outputSeven.getKey());
         assertEquals("First Name Test7", outputSeven.getFirstName());
         assertEquals("Last Name Test7", outputSeven.getLastName());
         assertEquals("Address Test7", outputSeven.getAddress());
@@ -50,7 +49,7 @@ public class DozerConverterTest {
 
         PersonDto outputTwelve = outputList.get(12);
 
-        assertEquals(Long.valueOf(12L), outputTwelve.getId());
+        assertEquals(Long.valueOf(12L), outputTwelve.getKey());
         assertEquals("First Name Test12", outputTwelve.getFirstName());
         assertEquals("Last Name Test12", outputTwelve.getLastName());
         assertEquals("Address Test12", outputTwelve.getAddress());

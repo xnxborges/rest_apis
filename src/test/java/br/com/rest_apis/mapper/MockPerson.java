@@ -1,4 +1,4 @@
-package br.com.rest_apis.unitTests.mapper;
+package br.com.rest_apis.mapper;
 
 import br.com.rest_apis.dto.v1.PersonDto;
 import br.com.rest_apis.model.Person;
