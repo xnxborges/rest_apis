@@ -1,6 +1,7 @@
 package br.com.rest_apis.service;
 
 import br.com.rest_apis.dto.v1.PersonDto;
+import br.com.rest_apis.exceptions.RequiredObjectIsNullException;
 import br.com.rest_apis.model.Person;
 import br.com.rest_apis.repository.PersonRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,7 +29,7 @@ class PersonServiceTest {
 
     @Mock
     private PersonRepository repository;
-    
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
@@ -81,6 +82,19 @@ class PersonServiceTest {
         assertEquals("Female",result.getGender());
 
     }
+    @Test
+    void createWithNullPerson() {
+
+        Exception exception = assertThrows(RequiredObjectIsNullException.class, () -> {
+            service.create(null);
+        });
+
+        String expectedMessage = "It is not allowed to persist a null object";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+
+    }
 
     @Test
     void update() {
@@ -105,6 +119,20 @@ class PersonServiceTest {
         assertEquals("Last Name Test1",result.getLastName());
         assertEquals("Address Test1", result.getAddress());
         assertEquals("Female",result.getGender());
+    }
+
+    @Test
+    void updateWithNullPerson() {
+
+        Exception exception = assertThrows(RequiredObjectIsNullException.class, () -> {
+            service.update(null);
+        });
+
+        String expectedMessage = "It is not allowed to persist a null object";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+
     }
 
     @Test
