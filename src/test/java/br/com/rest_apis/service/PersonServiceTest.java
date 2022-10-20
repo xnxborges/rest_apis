@@ -17,8 +17,7 @@ import java.util.Optional;
 import static br.com.rest_apis.helper.MockPerson.getMockDto;
 import static br.com.rest_apis.helper.MockPerson.getMockEntity;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -141,10 +140,11 @@ class PersonServiceTest {
         person.setId(1L);
 
         when(repository.findById(1L)).thenReturn(Optional.of(person));
-
+        doNothing().when(repository).delete(person);
         service.delete(1L);
 
-        assertNull(doNothing());
+        verify(repository, times(1)).delete(person);
+
     }
 
 }
