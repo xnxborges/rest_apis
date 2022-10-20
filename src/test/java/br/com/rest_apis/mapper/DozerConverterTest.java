@@ -1,6 +1,7 @@
 package br.com.rest_apis.mapper;
 
 import br.com.rest_apis.dto.v1.PersonDto;
+import br.com.rest_apis.helper.MockPerson;
 import br.com.rest_apis.model.Person;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,7 +21,7 @@ class DozerConverterTest {
 
     @Test
     void parseEntityToDtoTest() {
-        PersonDto output =  DozerMapper.parseObject(inputObject.mockEntity(), PersonDto.class);
+        PersonDto output =  DozerMapper.parseObject(inputObject.getMockEntity(), PersonDto.class);
         assertEquals(Long.valueOf(0L), output.getKey());
         assertEquals("First Name Test0", output.getFirstName());
         assertEquals("Last Name Test0", output.getLastName());
@@ -30,7 +31,7 @@ class DozerConverterTest {
 
     @Test
     void parseEntityListToDtoListTest() {
-        List<PersonDto> outputList = DozerMapper.parseListObjects(inputObject.mockEntityList(), PersonDto.class);
+        List<PersonDto> outputList = DozerMapper.parseListObjects(inputObject.getMockEntityList(), PersonDto.class);
         PersonDto outputZero = outputList.get(0);
 
         assertEquals(Long.valueOf(0L), outputZero.getKey());
@@ -58,7 +59,7 @@ class DozerConverterTest {
 
     @Test
     void parseDtoToEntityTest() {
-        Person output = DozerMapper.parseObject(inputObject.mockDto(), Person.class);
+        Person output = DozerMapper.parseObject(inputObject.getMockDto(), Person.class);
         assertEquals(Long.valueOf(0L), output.getId());
         assertEquals("First Name Test0", output.getFirstName());
         assertEquals("Last Name Test0", output.getLastName());
@@ -68,7 +69,7 @@ class DozerConverterTest {
 
     @Test
     void parserDtoListToEntityListTest() {
-        List<Person> outputList = DozerMapper.parseListObjects(inputObject.mockDtoList(), Person.class);
+        List<Person> outputList = DozerMapper.parseListObjects(inputObject.getMockDtoList(), Person.class);
         Person outputZero = outputList.get(0);
 
         assertEquals(Long.valueOf(0L), outputZero.getId());
