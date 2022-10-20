@@ -1,7 +1,6 @@
 package br.com.rest_apis.service;
 
 import br.com.rest_apis.dto.v1.PersonDto;
-import br.com.rest_apis.helper.MockPerson;
 import br.com.rest_apis.model.Person;
 import br.com.rest_apis.repository.PersonRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,9 +13,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Optional;
 
+import static br.com.rest_apis.helper.MockPerson.getMockDto;
 import static br.com.rest_apis.helper.MockPerson.getMockEntity;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -28,11 +28,7 @@ class PersonServiceTest {
 
     @Mock
     private PersonRepository repository;
-
-    private MockPerson mockPerson;
-
-
-
+    
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
@@ -42,7 +38,7 @@ class PersonServiceTest {
     void findById() {
         Person person = getMockEntity(1);
 
-        when(repository.findById(anyLong())).thenReturn(Optional.of(person));
+        when(repository.findById(1L)).thenReturn(Optional.of(person));
 
         PersonDto result = service.findById(1L);
 
@@ -65,19 +61,62 @@ class PersonServiceTest {
 
     @Test
     void create() {
+        Person person = getMockEntity(1);
+        person.setId(1L);
 
-    }
+        PersonDto personDto = getMockDto(1);
+        personDto.setKey(1L);
 
-    @Test
-    void createV2() {
+        when(repository.save(person)).thenReturn(person);
+
+        PersonDto result = service.create(personDto);
+
+        assertNotNull(result);
+        assertNotNull(result.getKey());
+        assertNotNull(result.getLinks());
+        System.out.println(result.toString());
+        assertEquals("First Name Test1",result.getFirstName());
+        assertEquals("Last Name Test1",result.getLastName());
+        assertEquals("Address Test1", result.getAddress());
+        assertEquals("Female",result.getGender());
+
     }
 
     @Test
     void update() {
+        Person person = getMockEntity(1);
+        person.setId(1L);
+
+        person.setId(1L);
+
+        PersonDto personDto = getMockDto(1);
+        personDto.setKey(1L);
+
+        when(repository.findById(1L)).thenReturn(Optional.of(person));
+        when(repository.save(person)).thenReturn(person);
+
+        PersonDto result = service.update(personDto);
+
+        assertNotNull(result);
+        assertNotNull(result.getKey());
+        assertNotNull(result.getLinks());
+        System.out.println(result);
+        assertEquals("First Name Test1",result.getFirstName());
+        assertEquals("Last Name Test1",result.getLastName());
+        assertEquals("Address Test1", result.getAddress());
+        assertEquals("Female",result.getGender());
     }
 
     @Test
     void delete() {
+        Person person = getMockEntity(1);
+        person.setId(1L);
+
+        when(repository.findById(1L)).thenReturn(Optional.of(person));
+
+        service.delete(1L);
+
+        assertNull(doNothing());
     }
 
 }

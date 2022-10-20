@@ -31,10 +31,10 @@ public class PersonService {
     public PersonDto findById(Long id){
         logger.info("Finding one person");
 
-        Person entity = repository.findById(id)
+        Person person = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(NO_RECORDS));
 
-        PersonDto personDto =  DozerMapper.parseObject(entity, PersonDto.class);
+        PersonDto personDto =  DozerMapper.parseObject(person, PersonDto.class);
         personDto.add(linkTo(methodOn(PersonController.class).findById(personDto.getKey())).withSelfRel());
         return personDto;
     }
@@ -51,9 +51,9 @@ public class PersonService {
     public PersonDto create(PersonDto personDto){
         logger.info("Creating one persons");
 
-        Person entity = DozerMapper.parseObject(personDto, Person.class);
+        Person person = DozerMapper.parseObject(personDto, Person.class);
 
-        PersonDto dto = DozerMapper.parseObject(repository.save(entity), PersonDto.class);
+        PersonDto dto = DozerMapper.parseObject(repository.save(person), PersonDto.class);
         dto.add(linkTo(methodOn(PersonController.class).findById(dto.getKey())).withSelfRel());
         return dto;
     }
