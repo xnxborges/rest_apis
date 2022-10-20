@@ -1,4 +1,4 @@
-package br.com.rest_apis.exceptions;
+package br.com.rest_apis.exceptions.handler;
 
 import java.io.Serializable;
 import java.util.Date;
