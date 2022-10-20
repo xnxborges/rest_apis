@@ -10,15 +10,15 @@ import java.util.List;
 public class MockPerson {
 
 
-    public Person getMockEntity() {
+    public static Person getMockEntity() {
         return getMockEntity(0);
     }
     
-    public PersonDto getMockDto() {
+    public static PersonDto getMockDto() {
         return getMockDto(0);
     }
     
-    public List<Person> getMockEntityList() {
+    public static List<Person> getMockEntityList() {
         List<Person> persons = new ArrayList<Person>();
         for (int i = 0; i < 14; i++) {
             persons.add(getMockEntity(i));
@@ -26,7 +26,7 @@ public class MockPerson {
         return persons;
     }
 
-    public List<PersonDto> getMockDtoList() {
+    public static List<PersonDto> getMockDtoList() {
         List<PersonDto> personsDto = new ArrayList<>();
         for (int i = 0; i < 14; i++) {
             personsDto.add(getMockDto(i));

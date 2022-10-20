@@ -12,10 +12,10 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
 import java.util.Optional;
 
-import static br.com.rest_apis.helper.MockPerson.getMockDto;
-import static br.com.rest_apis.helper.MockPerson.getMockEntity;
+import static br.com.rest_apis.helper.MockPerson.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -57,6 +57,45 @@ class PersonServiceTest {
 
     @Test
     void findAll() {
+        List<Person> person = getMockEntityList();
+
+        when(repository.findAll()).thenReturn(person);
+
+        List<PersonDto> result = service.findAll();
+
+        assertNotNull(result);
+        assertEquals(14, result.size());
+
+        PersonDto personOne = result.get(1);
+        assertNotNull(personOne);
+        assertNotNull(personOne.getKey());
+        assertNotNull(personOne.getLinks());
+
+        assertEquals("First Name Test1",personOne.getFirstName());
+        assertEquals("Last Name Test1",personOne.getLastName());
+        assertEquals("Address Test1", personOne.getAddress());
+        assertEquals("Female",personOne.getGender());
+
+        PersonDto personFour = result.get(4);
+        assertNotNull(personFour);
+        assertNotNull(personFour.getKey());
+        assertNotNull(personFour.getLinks());
+
+        assertEquals("First Name Test4",personFour.getFirstName());
+        assertEquals("Last Name Test4",personFour.getLastName());
+        assertEquals("Address Test4", personFour.getAddress());
+        assertEquals("Male",personFour.getGender());
+
+        PersonDto personTwelve = result.get(12);
+        assertNotNull(personTwelve);
+        assertNotNull(personTwelve.getKey());
+        assertNotNull(personTwelve.getLinks());
+
+        assertEquals("First Name Test12",personTwelve.getFirstName());
+        assertEquals("Last Name Test12",personTwelve.getLastName());
+        assertEquals("Address Test12", personTwelve.getAddress());
+        assertEquals("Male",personTwelve.getGender());
+
     }
 
     @Test
