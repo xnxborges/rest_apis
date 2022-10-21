@@ -24,6 +24,10 @@ public class BookDto extends RepresentationModel<BookDto> {
         this.title = title;
     }
 
+    public BookDto() {
+        super();
+    }
+
     public Long getId() {
         return id;
     }

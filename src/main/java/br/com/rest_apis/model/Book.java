@@ -25,6 +25,10 @@ public class Book {
         this.title = title;
     }
 
+    public Book() {
+        super();
+    }
+
     public Long getId() {
         return id;
     }
