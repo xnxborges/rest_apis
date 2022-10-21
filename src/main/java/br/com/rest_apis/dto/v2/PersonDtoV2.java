@@ -1,12 +1,10 @@
 package br.com.rest_apis.dto.v2;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
 
-public class PersonDtoV2 implements Serializable {
-
+public class PersonDtoV2 {
 
     private Long id;
     private String firstName;
